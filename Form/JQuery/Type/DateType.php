@@ -44,6 +44,8 @@ class DateType extends AbstractType
     {
         $configs = $options['configs'];
         $years = $options['years'];
+        $minDate = $options['minDate'];
+        $maxDate = $options['maxDate'];
 
         $configs['dateFormat'] = 'yy-mm-dd';
         if ('single_text' === $options['widget']) {
@@ -68,6 +70,8 @@ class DateType extends AbstractType
         $view->vars = array_replace($view->vars, array(
             'min_year' => min($years),
             'max_year' => max($years),
+            'minDate' => $minDate,
+            'maxDate' => $maxDate,
             'configs' => $configs,
             'culture' => $options['culture'],
         ));
@@ -85,6 +89,16 @@ class DateType extends AbstractType
                 'culture' => \Locale::getPrimaryLanguage(\Locale::getDefault()),
                 'widget' => 'choice',
                 'years'  => range(date('Y') - 5, date('Y') + 5),
+                'minDate' => [
+                    'year' => date('Y') - 5,
+                    'month' => 1,
+                    'day' => 1,
+                ],
+                'maxDate' => [
+                    'year' => date('Y') + 5,
+                    'month' => 12,
+                    'day' => 31,
+                ],
                 'configs' => array(
                     'dateFormat' => null,
                 ),
